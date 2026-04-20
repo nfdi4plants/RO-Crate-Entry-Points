@@ -1,13 +1,14 @@
 # RO-Crate-Entry-Points
 
 This repository contains a validation script for RO-Crates with entry points.
-An entry point is a data entity of type `Dataset` that defines an `conformsTo` property pointing to an RO-Crate profile. 
+An entry point is a data entity of type `Dataset` that defines a `conformsTo` property pointing to an RO-Crate profile. 
 The script validates that the entry point adheres to the specified profile, ensuring that the RO-Crate is structured correctly and meets the requirements of the profile.
+The profile need to be available in the `rocrate-validator` [package](https://github.com/crs4/rocrate-validator), as this library is used for validation.
 
 If a specific profile is provided, the script will validate all entry points pointing to that profile.
 If no profile is specified, the script will validate all entry points in the RO-Crate.
 
-Additionally, the script checks if the input crate actually is a valid RO-Crate.
+Additionally, the script checks if the input crate actually is a valid RO-Crate (metadata).
 
 ## Usage
 
@@ -19,7 +20,8 @@ python validate_entry_points.py <path_to_ro_crate_metadata_json> [--profile <pro
 
 ## Workflow
 
-The script first finds all entry points through JSON-LD framing.
-Then, each entry point is given as an unflattened JSON-LD object.
-To allow for validation, the script transforms the entry point into the RO-Crate structure by flattening the JSON-LD graph, modifying the `@id` properties of all entities to be relative to the entry point, and adding the metadata entity of the RO-Crate.
+The script works as follows:
+First, it finds all entry points through JSON-LD framing using the `PyLD` [library](https://github.com/digitalbazaar/pyld).
+Now, each entry point is given as an unflattened JSON-LD object.
+To allow for validation, the script transforms the entry point into the RO-Crate structure by flattening the JSON-LD graph (again though `PyLD`), modifying the `@id` properties of all entities to be relative to the entry point, and adding the metadata entity of the RO-Crate.
 Finally, the script validates the entry point using the `rocrate-validator` library.
