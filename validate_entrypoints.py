@@ -120,10 +120,10 @@ def cratify_entrypoint(entrypoint, rocrate, baseid):
 with open(input, 'r') as f_in:
     doc = json.load(f_in)
 
-profiles = get_profiles()
-for p in profiles:
-    print("Available profile:", p.name, p.identifier, p.path)
-exit()
+# profiles = get_profiles()
+# for p in profiles:
+#     print("Available profile:", p.name, p.identifier, p.path)
+# exit()
 
 # check if doc is a valid RO-Crate by validating it with the RO-Crate profile
 settings = {}
